@@ -8,6 +8,7 @@ player_two = 'Marco van Basten'
 
 goal_0 = 32
 goal_1 = 54
+
 scorers = player_one + ' ' + str(goal_0) + ', ' + player_two + ' ' + str(goal_1)
 
 report = f'{player_one} scored in the {goal_0}nd minute \n{player_two} scored in the {goal_1}th minute'
