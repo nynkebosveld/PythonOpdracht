@@ -11,7 +11,7 @@ def clean_cache():
     directory = "cache"
 
     # Parent Directory path
-    parent_dir = "../pythonProject/"
+    parent_dir = "../files/"
 
     # Path
     path = os.path.join(parent_dir, directory)
