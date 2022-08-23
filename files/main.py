@@ -5,13 +5,15 @@ import glob
 import os
 from zipfile import ZipFile
 
+my_zip_file = os.path.join(os.getcwd(), "data.zip")
+my_cache_dir = os.path.join(os.getcwd(), "cache")
 
 def clean_cache():
     # Directory
     directory = "cache"
 
     # Parent Directory path
-    parent_dir = "../files/"
+    parent_dir = my_cache_dir
 
     # Path
     path = os.path.join(parent_dir, directory)
@@ -26,12 +28,14 @@ def clean_cache():
 
 def cache_zip():
     clean_cache()
-    zip = ZipFile("./data.zip", 'r')
+    zip = my_zip_file
     zip.extractall("./cache")
 
 
 def cached_files():
-    return glob.glob("./cache/*")
+    filePattern = os.path.join(my_cache_dir, "*")
+    globbed = glob.glob(filePattern)
+    return  globbed
 
 
 def find_password(files):
@@ -46,7 +50,7 @@ def find_password(files):
 
                 for line in f:
                     if keyword in line:
-                        print(line)
+                        print(line[line.find(" ")+1:-1])
 
     return f.close()
 
