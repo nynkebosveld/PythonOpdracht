@@ -5,33 +5,33 @@ import glob
 import os
 from zipfile import ZipFile
 
+my_zip_files = os.path.join(os.getcwd(), "data.zip")
+my_cache_dir = os.path.join(os.getcwd(), "cache")
+
 
 def clean_cache():
-    # Directory
-    directory = "cache"
-
     # Parent Directory path
-    parent_dir = "../files/"
+    parent_dir = os.path.pardir
 
     # Path
-    path = os.path.join(parent_dir, directory)
+    path = os.path.join(parent_dir, my_cache_dir)
 
-    try:
-        os.mkdir(path)
-        print("Directory '% s' created" % directory)
-    except OSError as e:
+    if(os.path.exists(path)):
+        for f in os.listdir(path):
+            os.remove(os.path.join(path, f))
+    else:
         for f in os.listdir(path):
             os.remove(os.path.join(path, f))
 
-
 def cache_zip():
     clean_cache()
-    zip = ZipFile("./data.zip", 'r')
-    zip.extractall("./cache")
+    zip = ZipFile(my_zip_files, 'r')
+    zip.extractall(my_cache_dir)
 
 
 def cached_files():
-    return glob.glob("./cache/*")
+    filePattern = os.path.join(my_cache_dir, "*")
+    return glob.glob(filePattern)
 
 
 def find_password(files):
@@ -41,14 +41,13 @@ def find_password(files):
     for file in files:
         with open(file) as f:
             if keyword in f.read():
-
                 f = open(file, "r")
 
                 for line in f:
                     if keyword in line:
-                        print(line[line.find(" ")+1:-1])
+                        print(line[line.find(" ") + 1:-1])
 
     return f.close()
 
-files = cached_files()
-find_password(files)
+
+find_password(cached_files())
