@@ -4,6 +4,7 @@ __human_name__ = "files"
 import glob
 import os
 from zipfile import ZipFile
+import shutil
 
 # Public variables
 my_zip_files = os.path.join(os.getcwd(), "data.zip")
@@ -18,22 +19,25 @@ def clean_cache():
     # Path
     path = os.path.join(parent_dir, my_cache_dir)
 
-    if (os.path.exists(path)):
-        os.rmdir(path)
+    if os.path.exists(path):
+        shutil.rmtree(path)
         os.mkdir(path)
     else:
-            os.mkdir(path)
+        os.mkdir(path)
+
 
 # Get all the files from the zip file
-def cache_zip():
+def cache_zip(my_zip_file, my_cache_directory):
     clean_cache()
-    zip = ZipFile(my_zip_files, 'r')
-    zip.extractall(my_cache_dir)
+    zip = ZipFile(my_zip_file, 'r')
+    zip.extractall(my_cache_directory)
+
 
 # Return a list of all files in the cache directory
 def cached_files():
     filePattern = os.path.join(my_cache_dir, "*")
     return glob.glob(filePattern)
+
 
 # Find the password
 def find_password(files):
@@ -50,5 +54,6 @@ def find_password(files):
                         f.close()
                         return line[line.find(" ") + 1:-1]
 
-
-find_password(cached_files())
+if __name__ == "__main__":
+    cache_zip(my_zip_files, my_cache_dir)
+    print(find_password(cached_files()))
