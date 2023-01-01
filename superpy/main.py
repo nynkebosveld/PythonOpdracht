@@ -76,9 +76,7 @@ def main():
         reader = csv.reader(f)
 
         for row in reader:
-            # Check if the expiration date is greater than or equal to the current date
             if row[2] >= str(expire):
-                # Get the item name
                 name = row[0]
 
                 if name in counts:
@@ -116,15 +114,14 @@ def main():
 
         new_date = today + timedelta(days=days)
 
-        # Serialize the new date as a string
+
         new_date_str = new_date.strftime('%Y-%m-%d')
 
-        # Create a dictionary with the original and new dates
         data = {
             "date": new_date_str
         }
 
-        # Write the data to a JSON file
+
         with open("dates.json", "w") as f:
             json.dump(data, f)
 
