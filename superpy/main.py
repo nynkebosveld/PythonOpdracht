@@ -37,7 +37,7 @@ def sell(args):
         f.close()
         print('Okay')
         return
-    print('ERROR: No such product found')
+    print('ERROR: Product not in stock')
 
 
 def inventory(args):
